@@ -9,7 +9,7 @@ application docker image for you.
 *Step 1: Use the same project*
 
 ....
-$ oc project mycliproject-UserName
+$ oc project <your_project>
 ....
 
 *Step 2: Create an application that uses docker file*

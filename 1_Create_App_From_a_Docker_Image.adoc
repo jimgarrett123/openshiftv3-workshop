@@ -11,7 +11,7 @@ how to create an application from an existing docker image.
 the commands below.
 
 ....
-$ oc project mycliproject-UserName
+$ oc project <your_project>
 ....
 
 Check the status of the project by running the following
