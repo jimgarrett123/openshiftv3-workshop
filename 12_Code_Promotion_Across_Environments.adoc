@@ -161,4 +161,6 @@ for complete understanding.
 Congratulations!! you now know how to promote your application across
 environments in OpenShift 3.
 
+link:13_Using_JBDS.adoc[Next Lab]
+
 link:0_toc.adoc[Table Of Contents]

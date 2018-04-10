@@ -341,4 +341,6 @@ application and also to pass configuration information using ConfigMaps.
 In the next lab, we will learn to use ConfigMaps to dynamically update
 the configuration without restarting the pod!!
 
+link:17_Dynamic_Configuration_Updates_using_ConfigMap.adoc[Next Lab]
+
 link:0_toc.adoc[Table Of Contents]

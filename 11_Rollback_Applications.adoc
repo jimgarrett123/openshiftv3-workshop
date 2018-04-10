@@ -69,4 +69,6 @@ a new build configuration.
 
 image:images/green_app.jpg[image]
 
+link:12_Code_Promotion_Across_Environments.adoc[Next Lab]
+
 link:0_toc.adoc[Table Of Contents]

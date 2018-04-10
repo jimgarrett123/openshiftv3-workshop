@@ -327,4 +327,6 @@ $ oc delete all --all
 
 Then from the Browser locate the Provisioned Service (in the project) named JBoss EAP 7.0, then click its menu (to the right) and select 'Delete'
 
+link:5_Using_templates.adoc[Next Lab]
+
 link:0_toc.adoc[Table Of Contents]

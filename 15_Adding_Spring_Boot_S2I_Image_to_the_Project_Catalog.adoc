@@ -116,4 +116,7 @@ tell your openshift cluster administrator. +
 *Answer* The cluster administrator will add the image to the `openshift`
 project and everyone will start seeing it.
 
+link:16_Adding_database_to_your_Spring_Boot_Application.adoc[Next Lab]
+
 link:0_toc.adoc[Table Of Contents]
+

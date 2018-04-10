@@ -204,4 +204,6 @@ deployments of applications using OpenShift and GitHub Web Hook
 triggers. It should be noted that OpenShift also supports Generic Web
 Hooks.
 
+link:11_Rollback_Applications.adoc[Next Lab]
+
 link:0_toc.adoc[Table Of Contents]

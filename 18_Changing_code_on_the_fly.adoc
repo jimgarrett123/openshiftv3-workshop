@@ -152,4 +152,6 @@ repository.
 
 You can repeat a few more changes and enjoy the rsync!!!
 
+link:19_Creating_a_Pipeline.adoc[Next Lab]
+
 link:0_toc.adoc[Table Of Contents]

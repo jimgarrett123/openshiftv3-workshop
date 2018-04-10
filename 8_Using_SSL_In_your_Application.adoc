@@ -124,4 +124,6 @@ Verify by visiting your page by using the `https://` URI
 Congratulations!! In this exercise you have learned about service SSL
 from your application
 
+link:9_Blue_Green_Deployments.adoc[Next Lab]
+
 link:0_toc.adoc[Table Of Contents]
