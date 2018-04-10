@@ -16,30 +16,16 @@ In this exercise you will learn to deploy a war file. We will assume
 that you built your source code outside of OpenShift build process and
 want to download the WAR file on your workstation.
 
-*Step 1: Create project & folder structure*
+*Step 1: Navigate to your project & create a new folder structure*
 
 [source,sh]
 ----
-oc new-project binarydeploy-UserName
+oc project <your_project>
 mkdir binarytest && cd binarytest
 mkdir deployments
 ----
 
-FYI:
-
-You can also create a modules directory at the same level as
-``deployments'' above and have additional modules there or configuration
-files. For example:
-
-....
-mkdir modules
-cd modules
-mkdir cfg
-cd cfg
-touch config-1.cfg config-2.cfg
-....
-
-*Step 1: Create war file*
+*Step 2: Create war file*
 
 Create a war file and place it in deployments directory.
 
@@ -48,43 +34,38 @@ renamed to `ROOT.war` and placed in the deployments folder (you can
 download this example WAR file
 https://raw.githubusercontent.com/RedHatWorkshops/ps/master/deployments/ROOT.war[here]).
 
+$ cd deployments
+
+$ wget https://raw.githubusercontent.com/RedHatWorkshops/ps/master/deployments/ROOT.war
+
 ....
 $ ls -lR
-
-total 0
-drwxr-xr-x 3 veer staff 102 Jul 5 2015 deployments
-
-./deployments:
 
 total 12024
 -rwxr-xr-x 1 veer staff 6155452 Jul 5 2015 ROOT.war
 ....
 
-*Step 2: Using builder image*
+*Step 3: Using builder image*
 
-Create a new build using the builder image of your choice. Here we are
-using JBoss EWS (tomcat 8) image. The flag `binary=true` indicates that
-this build will use the binary content instead of the url to the source
-code.
+Create a new build using JBoss EWS (tomcat 8) image. The flag `binary=true` indicates that
+this build will use the binary content instead of the url to the source code.
 
 Here I am naming my application as *myapp*. So all the artifacts will
 get the name *myapp*.
 
 ....
-$ oc new-build --image-stream=jboss-webserver30-tomcat8-openshift --binary=true --name=myapp
+$ oc new-build --image-stream=jboss-webserver31-tomcat8-openshift:1.1 --binary=true --name=myapp
+--> Found image 4611711 (2 months old) in image stream "openshift/jboss-webserver31-tomcat8-openshift" under tag "1.1" for "jboss-webserver31-tomcat8-openshift:1.1"
 
---> Found image 58272fb (11 weeks old) in image stream "jboss-webserver30-tomcat8-openshift" in project "openshift" under tag "latest" for "jboss-webserver30-tomcat8-openshift"
-
-    JBoss Web Server 3.0
+    JBoss Web Server 3.1
     --------------------
-    Platform for building and running web applications on JBoss Web Server 3.0 - Tomcat v8
+    Platform for building and running web applications on JBoss Web Server 3.1 - Tomcat v8
 
     Tags: builder, java, tomcat8
 
     * A source build using binary input will be created
       * The resulting image will be pushed to image stream "myapp:latest"
-      * Use 'start-build --from-dir=DIR|--from-repo=DIR|--from-file=FILE' to trigger a new build
-      * WARNING: a binary build was created, you must specify one of --from-dir|--from-file|--from-repo when starting builds
+      * A binary build was created, use 'start-build --from-dir' to trigger a new build
 
 --> Creating resources with label build=myapp ...
     imagestream "myapp" created
@@ -141,11 +122,11 @@ and refer to the image-stream created earlier.
 ....
 $ oc new-app myapp --allow-missing-imagestream-tags
 
---> Found image d4954db (4 minutes old) in image stream myapp under tag "latest" for "myapp"
+--> Found image 8f09261 (46 seconds old) in image stream "jimgarrett/myapp" under tag "latest" for "myapp"
 
-    mycliproject-admin/myapp-1:cd51ae53
-    -----------------------------------
-    Platform for building and running web applications on JBoss Web Server 3.0 - Tomcat v8
+    jimgarrett/myapp-1:2459f92c
+    ---------------------------
+    Platform for building and running web applications on JBoss Web Server 3.1 - Tomcat v8
 
     Tags: builder, java, tomcat8
 
@@ -153,12 +134,14 @@ $ oc new-app myapp --allow-missing-imagestream-tags
     * Ports 8080/tcp, 8443/tcp, 8778/tcp will be load balanced by service "myapp"
       * Other containers can access this service through the hostname "myapp"
 
---> Creating resources with label app=myapp ...
+--> Creating resources ...
     deploymentconfig "myapp" created
     service "myapp" created
 --> Success
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose svc/myapp'
     Run 'oc status' to view your app.
-....
+    ....
 
 Now, expose the service as a route to be able to use it from the
 browser.

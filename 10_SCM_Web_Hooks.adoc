@@ -12,23 +12,29 @@ Part I
 
 In Part I of the Lab we will:
 
-* Create a new project.
+* Navigate to your project.
 * Deploy an application using a source to image strategy.
 * Create a route to expose the newly deployed application.
 
-*Step 1: Create new project*
+*Step 1: Navigate to your project*
 
 *Remember* to substitute the UserName
 
 ....
-$ oc new-project scm-web-hooks-UserName --display-name="Test WebHooks"
+$ oc project <your_project>
 ....
 
 *Step 2: Create new application*
 
-* We will use the forked repository from the previous lab.
+* In the previous lab we used a github repository containing the bluegreen application.  
+For this lab we'll want to first "fork" that repository so we can make changes to the code.
 
-*Remember* to substitute the UserName.
+From a web browser, navigate to https://github.com/RedHatWorkshops/bluegreen
+
+In the upper right corner of the page, click on the "Fork" icon to fork the repository.  This will give
+you a copy of the code that you can manage and modify.  Your will use this repository in the next step
+when you create a new application in your project.
+
 
 ....
 $ oc new-app --image-stream=php --code=https://github.com/your_github_username/bluegreen.git --name=scm-web-hooks
@@ -108,15 +114,14 @@ scm-web-hooks   172.30.71.191   <none>        8080/TCP   4m
 *Remember* to substitute the UserName.
 
 ....
-$ oc expose service scm-web-hooks --hostname=scm-web-hooks.UserName.apps.osecloud.com
-NAME            HOST/PORT                                  PATH      SERVICE         LABELS              TLS TERMINATION
-scm-web-hooks   scm-web-hooks.UserName.apps.osecloud.com             scm-web-hooks   app=scm-web-hooks   
+$ oc expose service scm-web-hooks
+route "scm-web-hooks" exposed
 ....
 
 *Step 5: Test the application*
 
 * Use the newly created route, in the above case
-`scm-web-hooks.UserName.apps.osecloud.com` and paste it in your browser.
+`http://scm-web-hooks-<your_project>.apps.rhpds.openshift.opentlc.com/` and paste it in your browser.
 * You should see:
 
 image:images/green_deployment.png[image]
@@ -138,8 +143,7 @@ In this part of the Lab we will:
 
 *Step 1: Retrieve the OpenShift Web Hook URL*
 
-* Navigate to the OpenShift Web console and login.
-* Select your *Test WebHooks* project, and click *Builds* and then
+* From inside a web browser, navigate to your project and then click *Builds* and then
 *Builds*.
 * Click onto the build name from the list. You should have just one in
 this case.
@@ -166,10 +170,15 @@ image:images/github_add_webhook.jpg[image]
 
 *Step 3: Redeploy the application*
 
-* Edit in your GitHub account the `image.php` file.
-* One of the lines in line 9 or 10 should be commented out. Make a
-change so that the line that was previously commented out becomes active
-and pound the other one.
+* In your GitHub account edit the `image.php` file.
+* On line 6 it defined a $deployment variable and obtains the COLOR environment variable.
+* Make a copy of this line, then comment the original line 6.
+* In the new copy of line 6 set its value to 'green', then save the file.
+
+//$deployment = getenv("COLOR");
+$deployment = 'green';
+
+
 * Commit the file.
 
 *Step 4: Monitor new deployment process*

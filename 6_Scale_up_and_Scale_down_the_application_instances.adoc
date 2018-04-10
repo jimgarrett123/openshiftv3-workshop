@@ -6,45 +6,43 @@ In this exercise we will learn how to scale our application. OpenShift
 has the capability to scale your application and make sure that many
 instances are always running.
 
-*Step 1: Switch to an existing project*
+*Step 1: From the home screen navigate to your project*
 
 For this exercise, we will be using an already running application. We
-will be using the `mycliproject-UserName` that you created in the
-previous labs. Make sure you are switched to that project by using the
-`oc project` command and *remember* to substitute UserName.
-
+will be using the `pricelist` that you created in the
+previous labs.
 ....
-$ oc project mycliproject-UserName
+$ oc project <your_project>
 ....
 
 *Step 2: View the deployment config*
 
-Take a look at the `deploymentConfig` (or `dc`) of the `time`
+Take a look at the `deploymentConfig` (or `dc`) of the `pricelist`
 application
 
 ....
-$ oc get deploymentConfig/time -o yaml
+$ oc get deploymentConfig/pricelist -o yaml
 
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
   annotations:
-    openshift.io/generated-by: OpenShiftNewApp
-  creationTimestamp: 2016-10-06T05:47:52Z
-  generation: 2
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: 2018-04-09T14:01:00Z
+  generation: 4
   labels:
-    app: time
-  name: time
-  namespace: mycliproject-admin
-  resourceVersion: "32084"
-  selfLink: /oapi/v1/namespaces/mycliproject-admin/deploymentconfigs/time
-  uid: 6bb299e0-8b88-11e6-ba5b-080027782cf7
+    app: pricelist
+  name: pricelist
+  namespace: jimgarrett
+  resourceVersion: "127826410"
+  selfLink: /oapi/v1/namespaces/jimgarrett/deploymentconfigs/pricelist
+  uid: 6f1fcd76-3bfe-11e8-888a-02722ccca8d2
 spec:
   replicas: 1
   selector:
-    app: time
-    deploymentconfig: time
+    deploymentconfig: pricelist
   strategy:
+    activeDeadlineSeconds: 21600
     resources: {}
     rollingParams:
       intervalSeconds: 1
@@ -55,56 +53,78 @@ spec:
     type: Rolling
   template:
     metadata:
-      annotations:
-        openshift.io/container.time.image.entrypoint: '["sh"]'
-        openshift.io/generated-by: OpenShiftNewApp
       creationTimestamp: null
       labels:
-        app: time
-        deploymentconfig: time
+        app: pricelist
+        deploymentconfig: pricelist
     spec:
       containers:
-      - image: 172.30.89.28:5000/mycliproject-admin/time@sha256:c490ea632c5362be3a3985285c623e674e58b876e70d9e3f94a151785b2ee87c
+      - env:
+        - name: MYSQL_SERVICE_HOST
+          value: mysql
+        - name: MYSQL_SERVICE_PORT
+          value: "3306"
+        - name: MYSQL_DATABASE
+          value: pricelist
+        - name: MYSQL_USER
+          value: pricelist
+        - name: MYSQL_PASSWORD
+          value: pricelist
+        image: 172.30.245.248:5000/jimgarrett/pricelist@sha256:9e631afc00da201b73e052d2d8509be350e8d9ec8d32e4a6afe8104d49a6162d
         imagePullPolicy: Always
-        name: time
+        name: pricelist
         ports:
         - containerPort: 8080
           protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
         resources: {}
         terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       restartPolicy: Always
+      schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
   test: false
   triggers:
-  - type: ConfigChange
   - imageChangeParams:
       automatic: true
       containerNames:
-      - time
+      - pricelist
       from:
         kind: ImageStreamTag
-        name: time:latest
-        namespace: mycliproject-admin
-      lastTriggeredImage: 172.30.89.28:5000/mycliproject-admin/time@sha256:c490ea632c5362be3a3985285c623e674e58b876e70d9e3f94a151785b2ee87c
+        name: pricelist:latest
+        namespace: jimgarrett
+      lastTriggeredImage: 172.30.245.248:5000/jimgarrett/pricelist@sha256:9e631afc00da201b73e052d2d8509be350e8d9ec8d32e4a6afe8104d49a6162d
     type: ImageChange
+  - type: ConfigChange
 status:
   availableReplicas: 1
+  conditions:
+  - lastTransitionTime: 2018-04-09T14:01:34Z
+    lastUpdateTime: 2018-04-09T14:01:34Z
+    message: Deployment config has minimum availability.
+    status: "True"
+    type: Available
+  - lastTransitionTime: 2018-04-09T14:05:04Z
+    lastUpdateTime: 2018-04-09T14:05:05Z
+    message: replication controller "pricelist-3" successfully rolled out
+    reason: NewReplicationControllerAvailable
+    status: "True"
+    type: Progressing
   details:
     causes:
-    - imageTrigger:
-        from:
-          kind: ImageStreamTag
-          name: time:latest
-          namespace: mycliproject-admin
-      type: ImageChange
-    message: caused by an image change
-  latestVersion: 1
-  observedGeneration: 2
+    - type: ConfigChange
+    message: config change
+  latestVersion: 3
+  observedGeneration: 4
+  readyReplicas: 1
   replicas: 1
+  unavailableReplicas: 0
   updatedReplicas: 1
-....
+  
+  ....
 
 Note that the `replicas:` is set to `1`. This tells OpenShift that when
 this application deploys, make sure that there is 1 instance.
@@ -118,19 +138,18 @@ To view the `rc` for your application first get the current pod running.
 ....
 oc get pods
 
-NAME           READY     STATUS      RESTARTS   AGE
-time-1-45jtc   1/1       Running     0          2h
-time-1-build   0/1       Completed   0          2h
-....
+NAME                READY     STATUS      RESTARTS   AGE
+mysql-1-ttvml       1/1       Running     0          57m
+pricelist-1-build   0/1       Completed   0          27m
+pricelist-3-2b489   1/1       Running     0          23m....
 
-This shows that the build `time-1` is running in pod `45jtc`. Let us
+This shows that the build `pricelist-3` is running in pod `2b489`. Let us
 view the `rc` on this build.
 
 ....
-$ oc get rc/time-1
-
-NAME      DESIRED   CURRENT   AGE
-time-1    1         1         2h
+$ oc get rc/pricelist-3
+NAME          DESIRED   CURRENT   READY     AGE
+pricelist-3   1         1         1         24m
 ....
 
 *Note:* You can change the number of replicas in `DeploymentConfig` or
@@ -151,19 +170,16 @@ To scale your application we will edit the `deploymentConfig` to 3.
 Open your browser to the Overview page and note you only have one
 instance running.
 
-image:images/scale_updown_overview.png[image]
-
 Now scale your application using the `oc scale` command (remembering to
 specify the `dc`)
 
 ....
-$ oc scale --replicas=3 dc/time
-deploymentconfig "time" scaled
+$ oc scale --replicas=3 dc/pricelist
+deploymentconfig "pricelist" scaled
 ....
 
 If you look at the web console and you will see that there are 3
 instances running now
-image:images/scale_updown_overview_scaled.png[image]
 
 *Note:* You can also scale up and down from the web console by going to
 the project overview page and clicking twice on
@@ -175,22 +191,21 @@ On the command line, see how many pods you are running now:
 ....
 $ oc get pods
 
-NAME           READY     STATUS      RESTARTS   AGE
-time-1-33wyq   1/1       Running     0          10m
-time-1-45jtc   1/1       Running     0          2h
-time-1-5ekuk   1/1       Running     0          10m
-time-1-build   0/1       Completed   0          2h
-....
+NAME                READY     STATUS      RESTARTS   AGE
+pricelist-1-build   0/1       Completed   0          30m
+pricelist-3-2b489   1/1       Running     0          26m
+pricelist-3-kq5x8   1/1       Running     0          1m
+pricelist-3-mfrmb   1/1       Running     0          1m....
 
-You now have 3 instances of `time-1` running (each with a different
-pod-id). If you check the `rc` of the `time-1` build you will see that
+You now have 3 instances of `pricelist-3` running (each with a different
+pod-id). If you check the `rc` of the `pricelist-3` build you will see that
 it has been updated by the `dc`.
 
 ....
-$ oc get rc/time-1
+$ oc get rc/pricelist-3
 
-NAME      DESIRED   CURRENT   AGE
-time-1    3         3         3h
+NAME        DESIRED   CURRENT   AGE
+pricelist-3    3         3         3h
 ....
 
 *Step 4: Idling the application*
@@ -199,19 +214,20 @@ Run the following command to find the available endpoints
 
 ....
 $ oc get endpoints
-NAME      ENDPOINTS                                            AGE
-time      10.128.0.33:8080,10.129.0.30:8080,10.129.2.27:8080   15m
+NAME        ENDPOINTS                                           AGE
+pricelist   10.1.10.160:8080,10.1.16.190:8080,10.1.3.105:8080   32m
 ....
 
-Note that the name of the endpoints is `time` and there are three ips
+Note that the name of the endpoints is `pricelist` and there are three ips
 addresses for the three pods.
 
-Run the `oc idle endpoints/time` command to idle the application
+Run the `oc idle endpoints/pricelist` command to idle the application
 
 ....
-$ oc idle endpoints/time
-Marked service mycliproject-veer/time to unidle resource DeploymentConfig mycliproject-veer/time (unidle to 3 replicas)
-Idled DeploymentConfig mycliproject-veer/time (dry run)
+$ oc idle endpoints/pricelist
+The service "jimgarrett/pricelist" has been marked as idled
+The service will unidle DeploymentConfig "jimgarrett/pricelist" to 3 replicas once it receives traffic
+DeploymentConfig "jimgarrett/pricelist" has been idled
 ....
 
 Go back to the webconsole. You will notice that the pods show up as
@@ -238,12 +254,12 @@ So, as soon as the user accesses the application, it comes up!!!
 *Step 7: Scaling Down*
 
 Scaling down is the same procedure as scaling up. Use the `oc scale`
-command on the `time` application `dc` setting.
+command on the `pricelist` application `dc` setting.
 
 ....
-oc scale --replicas=1 dc/time
+oc scale --replicas=1 dc/pricelist
 
-deploymentconfig "time" scaled
+deploymentconfig "pricelist" scaled
 ....
 
 Alternately, you can go to project overview page and click on

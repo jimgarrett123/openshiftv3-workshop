@@ -5,15 +5,15 @@ Using SSL in your application
 In this exercise you will set up your application to encrypt traffic
 with the OpenShift Wildcard certificate.
 
-*Step 1: Switch to an existing project*
+*Step 1: Navigate to your project*
 
 For this exercise, we will use an application that we created before. We
-will be using the *myjbossapp-UserName* that you created in the previous
-labs. Make sure you are switched to that project by using the *oc
-project* command. *Remember* to substitute UserName.
+will be using the *myapp* that you created in the previous
+lab. Make sure you are switched to that project by using the *oc
+project* command..
 
 ....
-$ oc project myjbossapp-UserName
+$ oc project <your_project>
 ....
 
 *Step 2: View the routing config*
@@ -22,37 +22,39 @@ To view the routing config you will need to use the `oc get route`
 command
 
 ....
-$ oc get route/ks -o yaml
+$ oc get route/myapp -o yaml
 
 apiVersion: v1
 kind: Route
 metadata:
   annotations:
     openshift.io/host.generated: "true"
-  creationTimestamp: 2016-10-06T06:28:23Z
+  creationTimestamp: 2018-04-09T15:40:04Z
   labels:
-    app: ks
-  name: ks
-  namespace: myjbossapp-admin
-  resourceVersion: "33256"
-  selfLink: /oapi/v1/namespaces/myjbossapp-admin/routes/ks
-  uid: 14cf078c-8b8e-11e6-ba5b-080027782cf7
+    app: myapp
+  name: myapp
+  namespace: jimgarrett
+  resourceVersion: "127925718"
+  selfLink: /oapi/v1/namespaces/jimgarrett/routes/myapp
+  uid: 45bc5aec-3c0c-11e8-888a-02722ccca8d2
 spec:
-  host: ks-myjbossapp-UserName.apps.osecloud.com
+  host: myapp-jimgarrett.apps.rhpds.openshift.opentlc.com
   port:
     targetPort: 8080-tcp
   to:
     kind: Service
-    name: ks
+    name: myapp
     weight: 100
+  wildcardPolicy: None
 status:
   ingress:
   - conditions:
-    - lastTransitionTime: 2016-10-06T06:28:23Z
+    - lastTransitionTime: 2018-04-09T15:40:04Z
       status: "True"
       type: Admitted
-    host: ks-myjbossapp-UserName.apps.osecloud.com
-    routerName: router  
+    host: myapp-jimgarrett.apps.rhpds.openshift.opentlc.com
+    routerName: router
+    wildcardPolicy: None
 ....
 
 Note here that the `host:` is set to the FQDN that your application is
@@ -73,7 +75,7 @@ sometimes called SSL-offloading).
 Edit your routing configuration:
 
 ....
-oc edit route/ks
+oc edit route/myapp
 ....
 
 You are going to add `tls: termination: edge` right below the `host:`
@@ -85,24 +87,34 @@ kind: Route
 metadata:
   annotations:
     openshift.io/host.generated: "true"
-  creationTimestamp: 2015-12-22T03:56:30Z
+  creationTimestamp: 2018-04-09T15:40:04Z
   labels:
-    app: ks
-  name: ks
-  namespace: myjbossapp-shchan
-  resourceVersion: "2903142"
-  selfLink: /oapi/v1/namespaces/myjbossapp-shchan/routes/ks
-  uid: fba5d1e6-a85f-11e5-be21-fa163ec58dad
+    app: myapp
+  name: myapp
+  namespace: jimgarrett
+  resourceVersion: "127925718"
+  selfLink: /oapi/v1/namespaces/jimgarrett/routes/myapp
+  uid: 45bc5aec-3c0c-11e8-888a-02722ccca8d2
 spec:
-  host: ks-myjbossapp-UserName.apps.osecloud.com
+  host: myapp-jimgarrett.apps.rhpds.openshift.opentlc.com
   tls:
     termination: edge
   port:
-    targetPort: "8080"
+    targetPort: 8080-tcp
   to:
     kind: Service
-    name: ks
-status: {}
+    name: myapp
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: 2018-04-09T15:40:04Z
+      status: "True"
+      type: Admitted
+    host: myapp-jimgarrett.apps.rhpds.openshift.opentlc.com
+    routerName: router
+    wildcardPolicy: None
 ....
 
 *Step 4: Verify*

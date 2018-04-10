@@ -8,76 +8,151 @@ PHP application that accesses this database using the service exposed by
 the database. We will provide a route (a URL) to access the frontend
 application from a browser.
 
-*Step 1: Create a Project*
+*Step 1: Navigate to your Project*
 
 Based on the experience gained from the previous exercise, log into the
 OpenShift Web Console. You will see the list of Projects.
 
-Using the *New Project* button, create a new project. We will call it
-*consoleproject-UserName*. Replace by your username to make this project
-unique. Type in a *Display Name* and *Description* of your choice.
-
-Press the *Create* button to complete the project creation from the Web
-Console. This will accomplish the same job as `oc new-project` from CLI.
+Click on your project.
 
 *Step 2: Create a MYSQL database using the template*
 
-Click on *Add to Project -> Browse Catolog* button and you will be taken to select an
-image or template. You will see the application create screen as shown
-below:
+Click on *Add to Project -> Browse Catolog* button
 
-image:images/template-add-to-project.png[image]
+In the "Search Catalog" field type 'mysql'
 
-Scroll down and click on *Data Stores* session. Find *MySQL (Ephemeral)*
-template from the list and click *Select*. You will also notice *MySQL
-(Persistent)* template. But we will address that in a different lab
-exercise.
+Find *MySQL (Ephemeral)* template from the list and click *Select*. 
+You will also notice *MySQL (Persistent)* template. But we will address 
+that in a different lab exercise.
 
-image:images/mysql_ephemeral_template.png[image]
+On the "Information" page, click the "Next" button.
 
-You will be taken to the mysql ephemeral creation screen. Click edit
-parameters and edit the values to use the following values:
+You will be taken to the mysql ephemeral creation screen. 
+
+Edit the values to use the following values:
 
 ....
 Database Service Name: mysql
 MySQL Connection Username: pricelist
 MySQL Connection Password: pricelist
+MySQL root user Password: pricelist
 MySQL Database Name: pricelist
 ....
 
-In the next section you can add the label:
+Click the "Next" button
 
-....
-app=pricelist
-....
 
-Click the *Create* button.
+On the "Binding" page click the *Create* button.
 
-image:images/mysql_ephemeral_creation.png[image]
-
-Click *Go to overview*.
-
-image:images/mysql_pod_on_proj_details.png[image]
-
-It will take you back to the project overview page and soon you will see
+Naviagete back to the project overview page and soon you will see
 an image of a running pod.
 
 image:images/mysql_pod_on_proj_overview.png[image]
 
-*Step 3: Add a PHP frontend to talk to this database*
+*Step 3: Add data to MySQL database*
+
+Let us see how we can enter the pod and access the database.
+
+From the command line, change the project to the
+`<your_project>` using the following command:
+
+IMPORTANT: Please replace <your_project> with the name of the project assigned to you.
+
+----
+$ oc project <your_project>
+----
+
+Based on what you learned previously get the list of running pods by running:
+
+----
+$ oc get pods
+----
+
+You will find one pod for mysql running. Take a note of it's name.
+
+Enter the pod by running the following command. Substitute the pod name
+with your mysql pod name.
+
+----
+$ oc rsh mysql-1-aewve
+
+bash-4.2$
+----
+
+You will be taken to a bash prompt inside the running pod. Now using the
+service ip address you noted earlier, port number, username and password
+you used start the mysql client as shown below. You will have to
+substitute your values here.
+
+TIP: If you need service ip address navigate to *Applications->Services* tab on the Web Console.
+
+[source,sh]
+----
+mysql -h127.0.0.1 -P3306 -upricelist -ppricelist
+----
+
+You will be taken to the `mysql` prompt. See the list of databases. You
+will notice that the sample database that you requested is added and
+available.
+
+[source,sh]
+----
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| pricelist          |
++--------------------+
+2 rows in set (0.00 sec)
+----
+
+Change over to use the `pricelist` database.
+
+[source,sh]
+----
+mysql> use pricelist;
+Database changed
+----
+
+Now `show tables` shows an empty set. So let us create a table and add
+some records using the commands shown below.
+
+Create the table:
+
+[source,sql]
+----
+create table users (user_id int not null auto_increment, username varchar(200),PRIMARY KEY(user_id));
+----
+
+Now we add some data:
+
+[source,sql]
+----
+insert into users values (null, 'joe');
+insert into users values (null, 'alice');
+----
+
+Verify that the records you added are there:
+
+[source,sql]
+----
+select * from users;
+----
+
+Now `exit` MySQL client and `exit` out of the pod.
+
+*Step 4: Add a PHP frontend to talk to this database*
 
 In this step we will add a PHP frontend application that talks to
 recently created database. The code is available on github at
 https://github.com/RedHatWorkshops/php-pricelist
 
 Browse through the code in this repository. If you take a look at the
-link:https://raw.githubusercontent.com/RedHatWorkshops/php-pricelist/master/config/database.php[database configuration] file (`config/database.php`) you will see that
-it reads the values from environment varables.
+link:https://raw.githubusercontent.com/RedHatWorkshops/php-pricelist/master/config/database.php[database configuration] file (`config/database.php`) you will see that it reads the values from environment varables.
 
-To add a frontend again click on *Add to Project -> Browse Catalog* to spin up a frontend
-application in the same *consoleproject-UserName*. It takes you to
-select image or template page and choose the *PHP* template under PHP
-apps.
+To add a new application click on *Add to Project*. It takes you to
+Search Catalog page where you choose the *PHP* template.
 
 image:images/php.png[image]
 
@@ -88,28 +163,11 @@ Enter the following values for each parameters:
 * Git Repository URL: https://github.com/RedHatWorkshops/php-pricelist
 ....
 
-Click onto the link `Show advanced routing, build, and deployment
-options`, go to Deployment Configuration section and enter the
-following environment variables:
 
-image:images/dbtest_deployment_env.png[image]
+Click "Next" to navigate to the next page, then click "Create" to add this application.
 
-In the next section add a label:
-
-....
-* app=pricelist
-....
-
-Click *Create* to add this frontend application to talk to the database.
-
-image:images/cakephp_confirm.png[image]
-
-Click *Continue to overview*.
-
-You will be taken back to the Project Overview page and you will start
-seeing that a new service is now available and exposed as a route. Since
-you labeled both frontend web and backend db as `app=pricelist` it will
-show as one application
+Navigate back to the Project Overview page and you will 
+see the new service is now available and exposed as a route.
 
 You will also notice that a build starts running very soon. Once the
 build completes, the application image created from the source code will
@@ -138,89 +196,32 @@ Push successful
 ....
 
 Once the build completes, OpenShift initiates a deploy process. Once the
-deployment is complete, the frontend pod starts running. You will find
-the running pod when you navigate to *Applications->Pods* on the Web
-console.
+deployment is complete, the frontend pod starts running. 
 
-Now use `curl` to run the database `bootstrap` script
-....
-$ oc project
-Using project "consoleproject-Username" on server "https://ocp.example.com:8443".
+Prior to testing the application we need to first define some Environment Variables.
 
-$ curl -k http://$(oc get route/pricelist -o jsonpath='{.spec.host}')/create_database.php
-Array
-(
-    [0] => 00000
-    [1] =>
-    [2] =>
-)
+From the Project page navigate to the 'pricelist' configuration page by clicking on the 'pricelist' project.
 
-....
+Click on the Environment tab to see a list of environment variables.
 
-Go ahead and open your application. The URL will be displayed by `oc get route`
+Add the following Environment variables to the application:
 
-....
-$ oc get route
-NAME        HOST/PORT                                                    PATH      SERVICES    PORT       TERMINATION   WILDCARD
-pricelist   pricelist-consoleproject-Username.apps.example.com 	                   pricelist   8080-tcp                 None
-....
+MYSQL_SERVICE_HOST : mysql
+MYSQL_SERVICE_PORT : 3306
+MYSQL_DATABASE     : pricelist
+MYSQL_USER         : pricelist
+MYSQL_PASSWORD     : pricelist
 
-When you open your application, click on the "Create Record" button and create a record.
-Once you added a record, click on "Read Records". The page should look
-like this.
+Then click the "Save" button to commit the variables.
 
-image:images/application_create_screen.png[image]
+Next navigate back to the Project page by clicking the "Overview" link on the left.
 
-You can verify this by logging into the database using `oc rsh`
+The Pricelist application will redeploy after changing the Environment variables.  
+When complete click on the "Route" for the application
 
-....
-$ oc get pods
-NAME                READY     STATUS      RESTARTS   AGE
-mysql-1-rxnlp       1/1       Running     0          25m
-pricelist-1-build   0/1       Completed   0          13m
-pricelist-1-z55t2   1/1       Running     0          12m
-....
+The application should display in the Browser.  Click the "+Create Record" button and create a new Record.
 
-Here you'll notice that the database pod is called `mysql-1-rxnlp`. Login
-to this pod using `oc rsh`
+Then click on the "Read Records" button to return to the main page, you should see your new record.
 
-....
-$ oc rsh mysql-1-rxnlp
-sh-4.2$
-....
-
-Run `mysql -u root pricelist` to login and run the query.
-....
-sh-4.2$ mysql -u root pricelist
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 326
-Server version: 5.7.16 MySQL Community Server (GPL)
-
-Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
-
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-mysql> SELECT * FROM products;
-+----+-----------+----------------------------------------------+-------+-------------+---------------------+---------------------+
-| id | name      | description                                  | price | category_id | created             | modified            |
-+----+-----------+----------------------------------------------+-------+-------------+---------------------+---------------------+
-| 14 | OpenShift | Build, deploy, and manage your applications! |  5000 |           4 | 2017-08-21 22:06:28 | 2017-08-21 22:06:28 |
-+----+-----------+----------------------------------------------+-------+-------------+---------------------+---------------------+
-1 row in set (0.00 sec)
-
-mysql> \q
-....
-
-In this lab exercise you have seen a complete web application deployed
-using OpenShift templates in two parts. First we deployed the MySQL
-database. We added data manually by getting into the pod. Then we added
-the frontend code that was built using the OpenShift S2I process. You
-configured this frontend application to access the database using a
-service, in this case, the ``mysql'' service. The frontend is made
-accessible using a route for which you gave a URL.
 
 link:0_toc.adoc[Table Of Contents]

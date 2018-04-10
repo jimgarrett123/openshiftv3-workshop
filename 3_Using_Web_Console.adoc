@@ -23,7 +23,7 @@ image:images/projects_list.png[image]
 Also note the *New Project* button which allows you to create a new
 project from Web Console.
 
-Now click on the CLI Project to view the details. OpenShift takes you by
+Now click on the your Project to view the details. OpenShift takes you by
 default to the *Overview* page and shows you a graphic representation of
 the application that is deployed here. You can see that a single pod is
 running and is front ended by a service. Note the route that you

@@ -5,16 +5,10 @@ Creating an application using JBoss EAP builder image
 In this exercise we will learn how to create an application using source
 code and the JBoss EAP builder image.
 
-*Step 1: Create a project or use an existing project*
-
-If you want to, you can create a new project based on what you have
-learned in previous labs. Or you can create a new project for JBoss
-Applications.
-
-*Remember* to replace the username before running the command.
+*Step 1: Use the same project*
 
 ....
-$ oc new-project myjbossapp-UserName --display-name="My JBoss Applications" --description="A place for my JBoss EAP Applications"
+$ oc project <your_project_name>
 ....
 
 *Step 2: Create an application that uses the JBoss EAP builder image*
@@ -24,39 +18,23 @@ https://github.com/RedHatWorkshops/kitchensink[here]). Taking that
 source-code; we will use the JBoss ImageStream (or the builder image) to
 assemble our application.
 
-Open the browser and select your new project *My JBoss Applications*.
+Open the browser and select your project *<your_project_name>*.
 
-Click into *Add to Project* button.
+Click into *Add to Project->Browse Catalog* button.
 
-In the search text box type `jboss-eap64-openshift` and select the
-latest version tag for this builder image (at the moment of creation
-this lab it is `jboss-eap64-openshift:1.5`).
+In the search text box type `eap` and select the
+'JBoss EAP 7.0(no https)' for this builder image.
 
 Fill the fields with the following information:
 
 ....
 Name: ks
 Git Repository URL: https://github.com/RedHatWorkshops/kitchensink
+Git Reference: master
+Context Directory: .
 ....
 
-Click on the blue link that says: *Show advanced routing, build, and
-deployment options*.
-
-On *Build Configuration* add a new _Environment Variable_.
-
-....
-name: MAVEN_MIRROR_URL
-value: <nexus_url>/repository/maven-public/
-
-Ex:-   http://nexus-ci.cloudapps.chicago.openshift3roadshow.com/repository/maven-public/
-....
-
-*REMEMBER:* Check with your instructor the proper URL for the Nexus
-repository.
-
-image:images/nexus_repo.png[image]
-
-Click on *Create* and then on *Continue to overview*.
+Click on *Next* and then click *Create*.
 
 *Step 3: Build*
 
@@ -322,7 +300,7 @@ Now access the application by using the route you got in the previous
 step. You can use either curl or your browser.
 
 ....
-$ curl ks-myjbossapp-UserName.apps.osecloud.com
+$ curl http://ks-<your_project_name>.apps.rhpds.openshift.opentlc.com/
 
  <!-- Plain HTML page that kicks us into the app -->
 <html>
@@ -332,7 +310,7 @@ $ curl ks-myjbossapp-UserName.apps.osecloud.com
 </html>
 ....
 
-Go to https://ks-myjbossapp-Username.apps.osecloud.com via your browser.
+Go to http://ks-<your_project_name>.apps.rhpds.openshift.opentlc.com/ via your browser.
 Please replace your username with yours.
 
 image:images/ks-myjbossapp.png[image]
@@ -340,5 +318,13 @@ image:images/ks-myjbossapp.png[image]
 Congratulations! In this exercise you have learned how to create, build
 and deploy a JBoss EAP application using OpenShift’s JBoss EAP Builder
 Image.
+
+Now let's clean up and remove this application from the project.
+
+From the command line type the following:
+
+$ oc delete all --all
+
+Then from the Browser locate the Provisioned Service (in the project) named JBoss EAP 7.0, then click its menu (to the right) and select 'Delete'
 
 link:0_toc.adoc[Table Of Contents]

@@ -22,7 +22,7 @@ display a blue rectangle.
 * We will first expose the first application.
 * We will also create another version of this application in the same
 project that displays a green rectangle.
-* We will then switch the FQDN to from the first application (blue) to
+* We will then switch the FQDN from the first application (blue) to
 the second application (green).
 
 image:images/blue_green_deployment.png[image]
@@ -31,12 +31,10 @@ image:images/blue_green_deployment.png[image]
 Part I
 ^^^^^^
 
-*Step 1: Create a new project*
+*Step 1: Navigate to your project*
 
-*Remember* to substitute the username
+$ oc project <your_project>
 
-....
-$ oc new-project bluegreen-UserName --display-name="Blue Green Project" --description="Blue Green Project"
 ....
 
 *Step 2: List existing image builder or image streams*
@@ -121,10 +119,8 @@ $ oc get service
 
 *Step 7: Create a route for the application*
 
-*Remember* to substitute the username. Expose the service:
-
 ....
-$ oc expose service blue --hostname=bluegreen.UserName.<<DomainNameSuffix>> --name=bluegreen
+$ oc expose service blue --name=bluegreen
 ....
 
 *Step 8: Test the application*
