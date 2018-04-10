@@ -195,7 +195,8 @@ NAME                READY     STATUS      RESTARTS   AGE
 pricelist-1-build   0/1       Completed   0          30m
 pricelist-3-2b489   1/1       Running     0          26m
 pricelist-3-kq5x8   1/1       Running     0          1m
-pricelist-3-mfrmb   1/1       Running     0          1m....
+pricelist-3-mfrmb   1/1       Running     0          1m
+....
 
 You now have 3 instances of `pricelist-3` running (each with a different
 pod-id). If you check the `rc` of the `pricelist-3` build you will see that
@@ -239,6 +240,7 @@ At this point the application is idled, the pods are not running and no
 resources are being used by the application. This doesn’t mean that the
 application is deleted. The current state is just saved.. that’s all.
 
+
 *Step 6: Reactivate your application* Now click on the application route
 URL or access the application via curl.
 
@@ -268,7 +270,6 @@ image:images/scale_down.jpg[image] twice to remove 2 running pods.
 Congratulations!! In this exercise you have learned about scaling and
 how to scale up/down your application on OpenShift!
 
-link:6_Scale_up_and_Scale_down_the_application_instances.adoc[Next Lab]
 link:7_Binary_Deployment_of_a_war_file.adoc[Next Lab]
 
 link:0_toc.adoc[Table Of Contents]

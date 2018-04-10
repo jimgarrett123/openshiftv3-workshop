@@ -73,7 +73,7 @@ $ oc new-build --image-stream=jboss-webserver31-tomcat8-openshift:1.1 --binary=t
 --> Success
 ....
 
-*Step 3: Executing the build*
+*Step 4: Executing the build*
 
 Start the build by uploading the contents of your `deployments`
 directory. Make sure you are in the parent folder where you created the
@@ -110,7 +110,7 @@ Pushed 6/6 layers, 100% complete
 Push successful
 ....
 
-*Step 4: Create the application*
+*Step 5: Create the application*
 
 Now create the application with the same name as what you gave for the
 build.
@@ -141,7 +141,7 @@ $ oc new-app myapp --allow-missing-imagestream-tags
     Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
      'oc expose svc/myapp'
     Run 'oc status' to view your app.
-    ....
+....
 
 Now, expose the service as a route to be able to use it from the
 browser.

@@ -35,19 +35,15 @@ Part I
 
 $ oc project <your_project>
 
-....
 
 *Step 2: List existing image builder or image streams*
 
-....
 $ oc new-app -S --image-stream=php
 
 Image streams (oc new-app --image-stream=<image-stream> [--code=<source>])
------
 php
   Project: openshift
   Tags:    5.5, 5.6, latest
-....
 
 *Step 3: Create an application*
 
@@ -270,4 +266,5 @@ service being used by the route to publicly advertise the application.
 * You can split traffic accross two services
 
 link:10_SCM_Web_Hooks.adoc[Next Lab]
+
 link:0_toc.adoc[Table Of Contents]
