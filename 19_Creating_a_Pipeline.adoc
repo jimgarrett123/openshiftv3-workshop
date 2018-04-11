@@ -198,6 +198,6 @@ understand how to create a pipeline that goes across multiple projects.
 Congratulations!! In this lab, you have learnt how to set up and run
 your own CI/CD pipeline on OpenShift.
 
-link:20-deploy-dotnet-app.adoc[Next Lab]
+link:21-dotnet-and-mysql-using-template.adoc[Next Lab]
 
 link:0_toc.adoc[Table Of Contents]

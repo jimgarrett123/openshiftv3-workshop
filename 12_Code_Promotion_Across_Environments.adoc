@@ -167,6 +167,6 @@ $ oc delete project development-UserName
 $ oc delete project testing-UserName
 ....
 
-link:13_Using_JBDS.adoc[Next Lab]
+link:17_Dynamic_Configuration_Updates_using_ConfigMap.adoc[Next Lab]
 
 link:0_toc.adoc[Table Of Contents]
