@@ -20,9 +20,10 @@ want to download the WAR file on your workstation.
 
 [source,sh]
 ----
-oc project <your_project>
-mkdir binarytest && cd binarytest
-mkdir deployments
+$ oc project <your_project>
+
+$ mkdir -p binarytest/deployments
+$ cd binarytest/deployments
 ----
 
 *Step 2: Create war file*
@@ -33,8 +34,6 @@ As an example here we have a WAR file called `petstore.war` that we
 renamed to `ROOT.war` and placed in the deployments folder (you can
 download this example WAR file
 https://raw.githubusercontent.com/RedHatWorkshops/ps/master/deployments/ROOT.war[here]).
-
-$ cd deployments
 
 $ wget https://raw.githubusercontent.com/RedHatWorkshops/ps/master/deployments/ROOT.war
 
@@ -83,6 +82,8 @@ contents of the `deployments` folder to the `deployments` directory and
 then builds the application image.
 
 ....
+$ cd ..
+
 $ oc start-build myapp --from-dir=.
 
 Uploading directory "." as binary input for the build ...
@@ -147,7 +148,7 @@ Now, expose the service as a route to be able to use it from the
 browser.
 
 ....
-$ oc expose svc myapp
+$ oc expose svc/myapp
 route "myapp" exposed
 ....
 

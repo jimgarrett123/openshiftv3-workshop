@@ -124,7 +124,7 @@ route "scm-web-hooks" exposed
 `http://scm-web-hooks-<your_project>.apps.rhpds.openshift.opentlc.com/` and paste it in your browser.
 * You should see:
 
-image:images/green_deployment.png[image]
+image:images/blue_deployment.jpeg[image]
 
 [[part-ii]]
 Part II

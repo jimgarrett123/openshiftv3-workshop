@@ -14,15 +14,15 @@ environments (development, qa, production).
 
 Using the knowledge you gained from the past create two projects.
 
-Name the first project *development-UserName* 
+Name the first project *development-<your_username>* 
 
 ....
-$ oc new-project development-UserName
+$ oc new-project development-jimgarrett
 ....
 
-Name the second *testing-UserName*. 
+Name the second *testing-<your_username>*. 
 ....
-$ oc new-project testing-UserName
+$ oc new-project testing-jimgarrett
 ....
 
 Also *remember* to substitute the username!
@@ -160,6 +160,12 @@ for complete understanding.
 
 Congratulations!! you now know how to promote your application across
 environments in OpenShift 3.
+
+Let's clean up the projects prior to continueing.
+....
+$ oc delete project development-UserName
+$ oc delete project testing-UserName
+....
 
 link:13_Using_JBDS.adoc[Next Lab]
 

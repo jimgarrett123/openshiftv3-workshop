@@ -101,15 +101,13 @@ Now add a route to the service with the following command. `oc expose`
 command will allow you to expose your service to the world so that you
 can access it from the browser.
 
-*Note*: In this example, I am using a domain name of
-`apps.osecloud.com`. *Ask the instructor for the domain name suffix* for
-your setup an change it.
-
 ....
-$ oc expose service welcome --name=welcome --hostname=welcome.UserName.<<DomainNameSuffix>>
+$ oc expose service welcome --name=welcome
+route "welcome" exposed
 
-NAME      HOST/PORT                     PATH      SERVICE   LABELS
-welcome   welcome.UserName.apps.osecloud.com             welcome   
+$ oc get route
+NAME      HOST/PORT                                             PATH      SERVICES   PORT       TERMINATION   WILDCARD
+welcome   welcome-jimgarrett.apps.rhpds.openshift.opentlc.com             welcome    8080-tcp                 None
 ....
 
 *Step 4: Try your application*
@@ -118,7 +116,7 @@ Access the application: Now access the application using curl (looking
 for 200 status code) or from the browser and see the result
 
 ....
-$ curl -Is http://welcome.UserName.<<DomainNameSuffix>>
+$ curl -Is http://welcome-jimgarrett.apps.rhpds.openshift.opentlc.com
 ....
 
 Voila!! you created your first application using an existing docker

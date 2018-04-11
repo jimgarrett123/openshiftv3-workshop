@@ -339,14 +339,9 @@ And then we check the route exposed.
 
 ....
 $ oc get routes
-
-NAME      HOST/PORT                                                          PATH      SERVICES   PORT       TERMINATION
-time      time-mycliproject-UserName.apps.osecloud.com                       time       8080-tcp   
+NAME      HOST/PORT                                          PATH      SERVICES   PORT       TERMINATION   WILDCARD
+time      time-jimgarrett.apps.rhpds.openshift.opentlc.com             time       8080-tcp                 None
 ....
-
-*Note:* Unlike in the previous lab, this time we did not use `--hostname`
-parameter while exposing the service to create a route. OpenShift
-automatically assigned the project name extension to the route name.
 
 *Step 6: Run the application*
 
@@ -356,7 +351,7 @@ time. *If you don’t provide time.php extension, it displays apache’s
 default index page.*
 
 ....
-$ curl time-mycliproject-UserName.apps.osecloud.com
+$ curl http://time-jimgarrett.apps.rhpds.openshift.opentlc.com
 Wednesday 1st of July 2015 01:12:20 AM
 ....
 

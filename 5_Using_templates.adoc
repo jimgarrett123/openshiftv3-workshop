@@ -56,8 +56,6 @@ Let us see how we can enter the pod and access the database.
 From the command line, change the project to the
 `<your_project>` using the following command:
 
-IMPORTANT: Please replace <your_project> with the name of the project assigned to you.
-
 ----
 $ oc project <your_project>
 ----
@@ -164,7 +162,7 @@ Enter the following values for each parameters:
 ....
 
 
-Click "Next" to navigate to the next page, then click "Create" to add this application.
+Click *Create* to add this application.
 
 Navigate back to the Project Overview page and you will 
 see the new service is now available and exposed as a route.
@@ -206,22 +204,24 @@ Click on the Environment tab to see a list of environment variables.
 
 Add the following Environment variables to the application:
 
+....
 MYSQL_SERVICE_HOST : mysql
 MYSQL_SERVICE_PORT : 3306
 MYSQL_DATABASE     : pricelist
 MYSQL_USER         : pricelist
 MYSQL_PASSWORD     : pricelist
+....
 
 Then click the "Save" button to commit the variables.
 
 Next navigate back to the Project page by clicking the "Overview" link on the left.
 
 The Pricelist application will redeploy after changing the Environment variables.  
-When complete click on the "Route" for the application
+When complete click on the *Route* for the application
 
-The application should display in the Browser.  Click the "+Create Record" button and create a new Record.
+The application should display in the Browser.  Click the *+Create Record* button and create a new Record.
 
-Then click on the "Read Records" button to return to the main page, you should see your new record.
+Then click on the *Read Records* button to return to the main page, you should see your new record.
 
 link:6_Scale_up_and_Scale_down_the_application_instances.adoc[Next Lab]
 

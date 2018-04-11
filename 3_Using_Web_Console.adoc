@@ -15,8 +15,7 @@ the master URL.
 image:images/login.png[image]
 
 Key in the username and password provided by the instructor. You will
-see the list of projects now. Note the project you created in the last
-lab exercise is shown here.
+see the list of projects now. Locate your project in the list.
 
 image:images/projects_list.png[image]
 
@@ -104,6 +103,10 @@ application from an existing Docker Image using CLI] using OpenShift Web
 Console.
 
 Spend a few minutes and familiarize using Web Console.
+
+Before going to the next lab, let's clean up your project and delete the components.
+
+$ oc delete all --all
 
 link:4_Creating_an_application_using_JBoss_EAP_builder_image.adoc[Next Lab]
 

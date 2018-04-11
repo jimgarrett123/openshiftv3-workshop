@@ -135,8 +135,7 @@ set number of instances always running.
 
 To view the `rc` for your application first get the current pod running.
 
-....
-oc get pods
+$ oc get pods
 
 NAME                READY     STATUS      RESTARTS   AGE
 mysql-1-ttvml       1/1       Running     0          57m
@@ -146,7 +145,6 @@ pricelist-3-2b489   1/1       Running     0          23m....
 This shows that the build `pricelist-3` is running in pod `2b489`. Let us
 view the `rc` on this build.
 
-....
 $ oc get rc/pricelist-3
 NAME          DESIRED   CURRENT   READY     AGE
 pricelist-3   1         1         1         24m
@@ -269,6 +267,10 @@ image:images/scale_down.jpg[image] twice to remove 2 running pods.
 
 Congratulations!! In this exercise you have learned about scaling and
 how to scale up/down your application on OpenShift!
+
+Let's clean up your project before continuing to the next lab.
+
+$ oc delete all --all
 
 link:7_Binary_Deployment_of_a_war_file.adoc[Next Lab]
 

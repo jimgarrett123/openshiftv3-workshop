@@ -38,7 +38,7 @@ Click on *Next* and then click *Create*.
 
 *Step 3: Build*
 
-Give it some seconds and you will see OpenShift starts the build process
+Give it some time and you will see OpenShift starts the build process
 for you. You can view the list of builds using `oc get builds` command.
 
 ....
@@ -279,8 +279,8 @@ Route should be already created.
 ....
 $ oc get routes
 
-NAME      HOST/PORT                                                      PATH      SERVICES   PORT       TERMINATION
-ks        ks-myjbossapp-Username.apps.osecloud.com                                 ks         8080-tcp   
+NAME      HOST/PORT                                        PATH      SERVICES   PORT      TERMINATION   WILDCARD
+ks        ks-jimgarrett.apps.rhpds.openshift.opentlc.com             ks         <all>                   None
 ....
 
 If route does not show, we expose the service `ks` via the command
@@ -300,7 +300,7 @@ Now access the application by using the route you got in the previous
 step. You can use either curl or your browser.
 
 ....
-$ curl http://ks-<your_project_name>.apps.rhpds.openshift.opentlc.com/
+$ curl http://ks-jimgarrett.apps.rhpds.openshift.opentlc.com
 
  <!-- Plain HTML page that kicks us into the app -->
 <html>
