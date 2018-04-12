@@ -217,7 +217,13 @@ Then click the "Save" button to commit the variables.
 Next navigate back to the Project page by clicking the "Overview" link on the left.
 
 The Pricelist application will redeploy after changing the Environment variables.  
-When complete click on the *Route* for the application
+
+When complete click on the *Route* for the application.
+
+Initially the webpage will not contain any data.  There is a webpage that can be used to instantiate and populate
+the database tables.
+
+Using the Route, add the *create_database.php* to the end, and execute the page.  Then click your back button.
 
 The application should display in the Browser.  Click the *+Create Record* button and create a new Record.
 
