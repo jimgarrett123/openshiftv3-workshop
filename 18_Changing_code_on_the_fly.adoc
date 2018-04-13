@@ -9,9 +9,10 @@ NOTE: This model of programming is useful for interpreted languages.
 
 *Prerequisite:* This lab assumes that you have git installed on your box.
 
-*Step 1: Navigate to your project*
+*Step 1: Create a new project* +
+Create a new project on the OpenShift cluster with name
+`synccode-UserName`. *Note* Substitute the `UserName` with your `userId`
 
-$ oc project <your_project>
 
 *Step 2: Clone the git repository locally* Clone the following git
 repository to your workstation.

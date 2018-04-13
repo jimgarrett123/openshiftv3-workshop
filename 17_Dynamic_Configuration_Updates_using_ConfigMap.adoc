@@ -11,10 +11,13 @@ link:16.%20Adding%20database%20to%20your%20Spring%20Boot%20Application.md[lab],
 we created a configuration to connect to the MySQL database by mounting
 `application.properties` file using ConfigMap.
 
-*Step 1: Create PostgreSQL Pod*
+*Step 0: Create a new project*
 
-Ensure you are in the `spring-UserName` project. *Substitute UserName
-with your own userid*
+....
+oc new-project spring-userName
+....
+
+*Step 1: Create PostgreSQL Pod*
 
 Based on what you have learnt in the previous labs, create a new
 Postgresql database pod i.e. `Add to project`, search for `postgresql`,

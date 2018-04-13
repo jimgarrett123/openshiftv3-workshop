@@ -5,11 +5,18 @@ Creating an application using JBoss EAP builder image
 In this exercise we will learn how to create an application using source
 code and the JBoss EAP builder image.
 
-*Step 1: Use the same project*
+*Step 1: Create a project or use an existing project*
+
+If you want to, you can create a new project based on what you have
+learned in previous labs. Or you can create a new project for JBoss
+Applications.
+
+*Remember* to replace the username before running the command.
 
 ....
-$ oc project <your_project_name>
+$ oc new-project myjbossapp-UserName --display-name="My JBoss Applications" --description="A place for my JBoss EAP Applications"
 ....
+
 
 *Step 2: Create an application that uses the JBoss EAP builder image*
 

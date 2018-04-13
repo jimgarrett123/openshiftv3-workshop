@@ -8,12 +8,17 @@ PHP application that accesses this database using the service exposed by
 the database. We will provide a route (a URL) to access the frontend
 application from a browser.
 
-*Step 1: Navigate to your Project*
+*Step 1: Create a Project*
 
 Based on the experience gained from the previous exercise, log into the
 OpenShift Web Console. You will see the list of Projects.
 
-Click on your project.
+Using the *Create Project* button, create a new project. We will call it
+*consoleproject-UserName*. Replace by your username to make this project
+unique. Type in a *Display Name* and *Description* of your choice.
+
+Press the *Create* button to complete the project creation from the Web
+Console. This will accomplish the same job as `oc new-project` from CLI.
 
 *Step 2: Create a MYSQL database using the template*
 

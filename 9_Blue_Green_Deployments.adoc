@@ -31,9 +31,13 @@ image:images/blue_green_deployment.png[image]
 Part I
 ^^^^^^
 
-*Step 1: Navigate to your project*
+*Step 1: Create a new project*
 
-$ oc project <your_project>
+*Remember* to substitute the username
+
+....
+$ oc new-project bluegreen-UserName --display-name="Blue Green Project" --description="Blue Green Project"
+....
 
 
 *Step 2: List existing image builder or image streams*
