@@ -49,16 +49,22 @@ spec:
   postCommit:
 ....
 
-Note that the build configuration uses `JenkinsPipelineStrategy`. Also
-the `spec.strategy.jenkinsPipelineStrategy.jenkinsfile` is the actual
+Note that the build configuration uses `JenkinsPipelineStrategy`. 
+
+Also the `spec.strategy.jenkinsPipelineStrategy.jenkinsfile` is the actual
 pipeline that runs. We will discuss that in the next step.
 
 This will spin up a Jenkins pod. Give it a few minutes as it takes time
 to download and deploy jenkins. You will also see the URL assigned to
-your Jenkins. It would be something like
-`https://jenkins-<your_project>.apps.rhpds.openshift.opentlc.com/`
+your Jenkins. It would be something like:
 
-If you click on that URL, you will be taken to Jenkins Console. *Note:*
+....
+https://jenkins-<your_project>.apps.rhpds.openshift.opentlc.com/
+....
+
+If you click on that URL, you will be taken to Jenkins Console. 
+
+*Note:*
 The browser may complain that the URL is insecure. Click on advanced and
 proceed to url.
 
@@ -68,6 +74,8 @@ credentials to login.
 On the next screen, allow all `Requested Permissions`
 
 Now you will be taken to Jenkins console (that is running on OpenShift).
+
+
 
 *Step 3:* Understand the pipeline
 
@@ -97,38 +105,45 @@ configuration so that we can trigger it using this Jenkins pipeline.
 
 *Step 4:* Create an application
 
-Clone the following application into your github account
-https://github.com/VeerMuchandi/bluegreen if you haven't already done it
-in a previous lab.
+If you haven't already done it in a previous lab Login to your github 
+repository and clone the following application into your github account
 
-Click on `Add to Project` on the project and select `PHP` latest image.
-We will use `myphp` as the application name. *Note* same name will be
-used for buildConfig and deployConfig by default.
+https://github.com/VeerMuchandi/bluegreen
+
+From within the OpenShift Console, click on `Add to Project` and select `PHP` latest image.
+
+We will use `myphp` as the application name. 
+
+*Note* same name will be used for buildConfig and deployConfig by default.
 
 Use your own github url if you want to test by pushing changes to code.
 Otherwise you can use https://github.com/VeerMuchandi/bluegreen.
 
-Now click on the link `advanced options`. It will open up a bunch of
+Now click on the link *advanced options*. It will open up a bunch of
 options and we will edit those. 
 
 Under the section `Build Configuration`, *uncheck* all the three check 
 boxes for the following options +
+
+....
 * Configure a webhook build trigger 
 * Automatically build a new image when the builder image changes 
 * Launch the first build when the build configuration is created
-
+....
 By unchecking these, we are disabling the start of the builds as we want
 to control those using pipeline.
 
 In the section `Deployment Configuration`, *uncheck* the two auto-deploy
 options 
+
+....
 * New image is available 
 * Deployment configuration changes
-
+....
 By unchecking these, we are disabling the start of the deployments as we
 want to control those using pipeline.
 
-image::pipeline1.jpeg[image]
+image:images/pipeline1.jpeg[image]
 
 Now scroll down and click on the `Create` button.
 
@@ -140,11 +155,11 @@ configuration, imagestream, service and route) but won't start a build.
 Using the menu on the left, click on "Builds->Pipelines".  There should be
 one pipeline visible.  Click on the "Start Pipeline" button.
 
-image::pipeline2.jpeg[image]
+image:images/pipeline2.jpeg[image]
 
 Notice the pipeline starts and `build` and `deploy` stages are executed.
 
-image::pipeline3.jpeg[image]
+image:images/pipeline3.jpeg[image]
 
 Click on the `View log` link for the pipeline. It'll take you to Jenkins
 and show the logs.
@@ -156,11 +171,11 @@ application to notice that the `blue` box is displayed.
 *Step 6:* Configure webhook and trigger with changes (optional)
 
 
-Navigate back to the `configuration` tab for the pipeline. 
+Navigate back to the *Configuration* tab for the pipeline. 
 
 Builds->Pipeline -> Click on Pipeline and then click on Configuration tab.
 
-Copy the value for `Github webhook` url.
+Copy the value for *Github webhook* url.
 
 Based on what you learn in the past, go to your github repository that
 you cloned and set up a webhook pointing to this URL.
