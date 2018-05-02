@@ -18,11 +18,10 @@ interface (OCP CLI)
 The OCP CLI exposes commands for managing applications, as well as
 lower-level tools to interact with each component of a system. The
 binaries for Mac, Windows, and Linux are available for download from the
-Red Hat Customer Portal via the following methods:
+Red Hat Customer Portal via the following URL.  Make sure you download the lastest/most 
+recent version of the product.
 
 * Supported Binary from the Red Hat Portal: https://access.redhat.com/downloads/content/290
-* Upstream Origin Binary: https://github.com/openshift/origin/releases
-* Past releases: https://mirror.openshift.com/pub/openshift-v3/clients
 
 *Installing the CLI tools*
 
@@ -43,13 +42,7 @@ paths listed in the `PATH` environment variable.
 running oc, go to git-scm.com to download git bash for Windows (during
 installation you need to specify in the selection to integrate with the
 command prompt)
-+
-2.2. Download and install Notepad++ and install the JSON plugin or use
-http://jsonlint.com/ to edit and validate JSON.
-+
-http://ammonsonline.com/formatted-json-in-notepad/
-+
-2.3. Configure your default editor to be Notepad++
+
 
 *CLI basic configuration*
 
