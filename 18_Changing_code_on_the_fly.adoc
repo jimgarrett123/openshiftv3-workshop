@@ -155,7 +155,7 @@ You can repeat a few more changes and enjoy the rsync!!!
 
 Let's clean up your project prior to continueing.
 
-$ oc delete all --all
+$ oc delete project synccode-UserName
 
 link:19_Creating_a_Pipeline.adoc[Next Lab]
 

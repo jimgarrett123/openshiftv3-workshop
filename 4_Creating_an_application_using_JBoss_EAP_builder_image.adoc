@@ -255,7 +255,7 @@ $ oc get dc ks -o json
 Note where the image is picked from. It shows that the deployment picks
 the image from the local registry (same ip address and port as in
 buildconfig) and the image tag is the same as what we built earlier.
-This means the deployment step deploys the application image what was
+This means the deployment step deploys the application image that was
 built earlier during the build step.
 
 If you get the list of pods, you’ll notice that the application gets
@@ -330,9 +330,7 @@ Now let's clean up and remove this application from the project.
 
 From the command line type the following:
 
-$ oc delete all --all
-
-Then from the Browser locate the Provisioned Service (in the project) named JBoss EAP 7.0, then click its menu (to the right) and select 'Delete'
+$ oc delete project myjbossapp-UserName
 
 link:5_Using_templates.adoc[Next Lab]
 

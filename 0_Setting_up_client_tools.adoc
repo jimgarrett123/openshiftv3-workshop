@@ -23,6 +23,8 @@ recent version of the product.
 
 * Supported Binary from the Red Hat Portal: https://access.redhat.com/downloads/content/290
 
+image:images/cli_download.jpg[image]
+
 *Installing the CLI tools*
 
 The CLI is provided as compressed files that can be decompressed to any

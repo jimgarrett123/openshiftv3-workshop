@@ -12,12 +12,6 @@ Part I
 
 In Part I of the Lab we will:
 
-* Navigate to your project.
-* Deploy an application using a source to image strategy.
-* Create a route to expose the newly deployed application.
-
-In Part I of the Lab we will:
-
 * Create a new project.
 * Deploy an application using a source to image strategy.
 * Create a route to expose the newly deployed application.

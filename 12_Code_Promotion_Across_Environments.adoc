@@ -17,12 +17,12 @@ Using the knowledge you gained from the past create two projects.
 Name the first project *development-<your_username>* 
 
 ....
-$ oc new-project development-jimgarrett
+$ oc new-project development-user1
 ....
 
 Name the second *testing-<your_username>*. 
 ....
-$ oc new-project testing-jimgarrett
+$ oc new-project testing-user1
 ....
 
 Also *remember* to substitute the username!

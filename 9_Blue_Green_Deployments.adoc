@@ -271,7 +271,7 @@ service being used by the route to publicly advertise the application.
 
 Let's clean up the project prior to continueing.
 
-$ oc delete all --all
+$ oc delete project bluegreen-UserName
 
 link:10_SCM_Web_Hooks.adoc[Next Lab]
 

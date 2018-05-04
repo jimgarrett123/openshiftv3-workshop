@@ -106,7 +106,10 @@ Spend a few minutes and familiarize using Web Console.
 
 Before going to the next lab, let's clean up your project and delete the components.
 
+....
 $ oc delete all --all
+$ oc delete project mycliproject-UserName
+....
 
 link:4_Creating_an_application_using_JBoss_EAP_builder_image.adoc[Next Lab]
 

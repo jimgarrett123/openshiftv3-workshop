@@ -9,12 +9,12 @@ instances are always running.
 *Step 1: Switch to an existing project*
 
 For this exercise, we will be using an already running application. We
-will be using the `mycliproject-UserName` that you created in the
-previous labs. Make sure you are switched to that project by using the
+will be using the `consoleproject-UserName` that you created in the
+previous lab. Make sure you are switched to that project by using the
 `oc project` command and *remember* to substitute UserName.
 
 ....
-$ oc project mycliproject-UserName
+$ oc project consoleproject-UserName
 ....
 
 
@@ -273,7 +273,7 @@ how to scale up/down your application on OpenShift!
 
 Let's clean up your project before continuing to the next lab.
 
-$ oc delete all --all
+$ oc delete project consoleproject-UserName
 
 link:7_Binary_Deployment_of_a_war_file.adoc[Next Lab]
 

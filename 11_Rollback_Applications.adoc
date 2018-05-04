@@ -72,7 +72,7 @@ image:images/blue_app.jpg[image]
 
 Let's clean up the project prior to continueing.
 
-$ oc delete all --all
+$ oc delete project scm-web-hooks-UserName
 
 link:12_Code_Promotion_Across_Environments.adoc[Next Lab]
 
